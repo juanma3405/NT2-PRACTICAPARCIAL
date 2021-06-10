@@ -1,0 +1,134 @@
+
+<section class="src-componentes-formulario">
+    <div class="jumbotron">
+      <h1>Formulario</h1>
+        <vue-form :state="formState" @submit.prevent="enviar()">
+        <!-- campo nombre -->
+        <validate tag="div">
+          <label for="nombre">Nombre</label>
+          <input
+             type="text" 
+             id="nombre" 
+             name="nombre" 
+             class="form-control"
+             autocomplete="off"
+             v-model.trim="formData.nombre"
+             required
+             
+             >  
+
+             <!-- :minlength="nombreLengthMin"
+             :maxlength="nombreLengthMax" Va adentro de input -->
+
+             <!--mensajes de validacion-->
+            <field-messages name="nombre" show="$dirty">
+              <div slot="required" class="alert alert-danger mt-1"> Campo requerido</div>                          
+             <!--  <div slot="minlength" class="alert alert-danger mt-1"> 
+                Este campo requiere como minimo {{nombreLengthMin}} caracteres </div>
+              <div v-if="formData.nombre.length == nombreLengthMax" class="alert alert-warning mt-1"> 
+                Este campo debe tener como maximo {{nombreLengthMax}} caracteres </div> -->
+            </field-messages>
+
+         </validate>
+        <br>
+         <!-- campo dni -->
+        <validate tag="div">
+          <label for="dni">Dni</label>
+          <input
+             type="number" 
+             id="dni" 
+             name="dni" 
+             class="form-control"
+             autocomplete="off"
+             v-model.number="formData.dni"
+             required
+             >  
+             <!-- :min="edadMin"
+             :max="edadMax" va adentro de input-->
+
+             <!--mensajes de validacion-->
+            <field-messages name="dni" show="$dirty">
+              <div slot="required" class="alert alert-danger mt-1"> Campo requerido</div>             
+             <!--  <div slot="min" class="alert alert-danger mt-1"> La edad minima es de 18 años</div>             
+              <div slot="max" class="alert alert-danger mt-1"> La edad maxima permitida es de 120 años </div>    -->          
+            </field-messages>
+
+        </validate>
+        <br>
+
+         <!-- campo monto a pagar -->
+        <validate tag="div">
+          <label for="totalAPagar">Total a pagar</label>
+          <input
+             type="number" 
+             id="totalAPagar" 
+             name="totalAPagar" 
+             class="form-control"
+             autocomplete="off"
+             v-model.number="formData.totalAPagar"
+             required
+             >  
+             <!--mensajes de validacion-->
+            <field-messages name="totalAPagar" show="$dirty">
+              <div slot="required" class="alert alert-danger mt-1"> Campo requerido</div>             
+            <!--   <div slot="totalAPagar" class="alert alert-danger mt-1"> totalAPagar no valido </div>  -->            
+            </field-messages>
+
+        </validate>
+        <br>
+
+         <!-- campo pago efectuado -->
+        <validate tag="div">
+          <label for="pagoEfectuado">Pago efectuado </label>
+          <input
+             type="number" 
+             id="pagoEfectuado" 
+             name="pagoEfectuado" 
+             class="form-control"
+             autocomplete="off"
+             v-model.number="formData.pagoEfectuado"
+             required
+             >  
+             <!--mensajes de validacion-->
+            <field-messages name="pagoEfectuado" show="$dirty">
+              <div slot="required" class="alert alert-danger mt-1"> Campo requerido</div>             
+             <!--  <div slot="pagoEfectuado" class="alert alert-danger mt-1"> Email no valido </div>   -->           
+            </field-messages>
+
+        </validate>
+        <br>
+        <button class="btn btn-success my-3" :disabled="formState.$invalid" type="submit">Enviar</button>
+        
+
+      </vue-form>
+
+      <hr>
+
+      <div class="table-responsive">
+        <table class="table">
+          <tr class="bg-secondary text-white">
+              <th>Nombre</th>
+              <th>Dni</th>
+              <th>Monto a pagar</th>
+              <th>Pago efectuado</th>
+              <th>Fecha Creacion</th>
+              <th>Saldo</th>
+
+              
+
+          </tr>
+          <tr :class="deuda(cliente.totalAPagar,cliente.pagoEfectuado)" v-for="(cliente,index) in clientes" class="bg-primary text-white">
+              <td> {{ cliente.nombre }} </td>
+              <td> {{ cliente.dni }} </td>
+              <td> {{ cliente.totalAPagar }} </td>
+              <td> {{ cliente.pagoEfectuado }} </td>
+              <td> {{ convertirFmtFyh() }} </td>
+              <td > {{saldo}} </td>
+
+          </tr>
+        </table>
+      </div>
+
+    </div>
+</section>
+
